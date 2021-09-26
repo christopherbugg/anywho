@@ -1,0 +1,138 @@
+<script src="openpgp.js"></script>
+
+<script type="text/javascript">
+
+window.onload = async function () 
+{
+
+    async function generateYourKeys() {
+
+        // Establish user/pass
+        const your_username = 'me'
+        const your_passphrase = 'myPassphrase'
+
+        // Generate keys
+        const { privateKeyArmored, publicKeyArmored, revocationCertificate } = await openpgp.generateKey({
+            userIDs: [{ name: your_username , email: 'example@example.com' }],        
+            passphrase: your_passphrase
+        });
+        let your_privateKeyArmoredEncrypted = privateKeyArmored;
+        let your_publicKeyArmored = publicKeyArmored;
+        let your_revocationCertificate = revocationCertificate;
+        
+        // Decrypt your keys
+        const your_privateKey = await openpgp.decryptKey({
+            privateKey: await openpgp.readKey({ armoredKey: your_privateKeyArmoredEncrypted }),
+            passphrase: your_passphrase
+        });
+
+        // Re-Armor the private key so it can be stored
+        let your_privateKeyArmoredDecrypted = your_privateKey.armor()
+
+        // Put the keys in the session so the client can use them
+        sessionStorage.setItem("your_ArmoredPrivateKey", your_privateKeyArmoredDecrypted )
+        sessionStorage.setItem("your_ArmoredPublicKey", your_publicKeyArmored )
+            
+    }
+
+    async function generateTheirKeys() {
+
+        // Establish user/pass
+        const their_username = 'you'
+        const their_passphrase = 'yourPassphrase'
+
+        // Generate keys
+        const { privateKeyArmored, publicKeyArmored, revocationCertificate } = await openpgp.generateKey({
+            userIDs: [{ name: their_username , email: 'example@example.com' }],        
+            passphrase: their_passphrase
+        });
+        let their_publicKeyArmored = publicKeyArmored;
+
+        sessionStorage.setItem("their_ArmoredPublicKey", their_publicKeyArmored )
+    }
+
+    // Establish these as global variables
+    let both_PublicKeys = [];
+    let your_privatekey = null;
+
+    async function loadKeys() {
+
+        // Get the keys!
+        let their_ArmoredPublicKey = sessionStorage.getItem('their_ArmoredPublicKey');
+        let your_ArmoredPrivateKeyDecrypted = sessionStorage.getItem('your_ArmoredPrivateKey');
+        let your_publicKeyArmored = sessionStorage.getItem('your_ArmoredPublicKey');
+
+        // Read the armored keys in and convert to a Key object
+        your_privatekey = await openpgp.readKey({ armoredKey: your_ArmoredPrivateKeyDecrypted });
+        let your_publicKey = await openpgp.readKey({ armoredKey: your_publicKeyArmored });
+        let their_publicKey = await openpgp.readKey({ armoredKey: their_ArmoredPublicKey });
+
+        // Setup both public keys in an array
+        both_PublicKeys = [your_publicKey, their_publicKey];  
+
+    }
+
+    // Establish these as global variables
+    let encryptedMessage = null;
+
+    async function sendMessage() {
+
+        let plaintext = 'This is a secret message!'
+
+        // Encrypt the message with both public keys
+        const encrypted = await openpgp.encrypt({
+            message: await openpgp.createMessage({ text: plaintext }),
+            encryptionKeys: both_PublicKeys, // publicKeys -> encryptionKeys (v5.0.0-3)
+            signingKeys: your_privatekey // privateKeys -> signingKeys (v5.0.0-3)
+        });
+
+        encryptedMessage = encrypted;
+    }
+
+    // Establish these as global varibles
+    let decryptedMessage = null;
+
+    async function getMessage() {
+
+        const parsedmessage = await openpgp.readMessage({
+                armoredMessage: encryptedMessage // parse armored message
+            });
+
+        const { data: decrypted, signatures } = await openpgp.decrypt({
+            message: parsedmessage,
+            verificationKeys: both_PublicKeys, // publicKeys -> verificationKeys (v5.0.0-3)
+            decryptionKeys: your_privatekey // privateKeys -> decryptionKeys (v5.0.0-3)
+        });
+
+        decryptedMessage = decrypted;
+    }
+
+    // Actually run everything
+    await console.log('generateYourKeys()')
+    await generateYourKeys()
+
+    await console.log('generateTheirKeys()')
+    await generateTheirKeys()
+
+    await console.log('loadKeys()')
+    await loadKeys()
+    console.log('both_PublicKeys')
+    console.log(both_PublicKeys)
+    console.log('your_privatekey')
+    console.log(your_privatekey)
+
+    await console.log('sendMessage()')
+    await sendMessage()
+    console.log('encryptedMessage')
+    console.log(encryptedMessage)
+
+    await console.log('getMessage()')
+    await getMessage()
+    console.log('decryptedMessage')
+    console.log(decryptedMessage)
+
+}
+
+</script>
+
+openpgp.js test page

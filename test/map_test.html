@@ -1,0 +1,52 @@
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin=""/>
+   <!-- Make sure you put this AFTER Leaflet's CSS -->
+ <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin=""></script>
+
+   
+   <style type="text/css">
+       #mapid { 
+        height: 200px;
+        width:  400px;
+        }
+   </style>
+   
+   <script type="text/javascript">
+
+window.onload = async function () 
+{
+
+    // Create new map object and set coords
+    var map = L.map('mapid').setView([51.505, -0.09], 13);
+
+    // Add the imagery behind it (the pictures that make the coordinate plane look like a map)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Add a marker to the map
+    L.marker([51.5, -0.09], {draggable: true, autoPan: true}).addTo(map).on('moveend', onMove)
+
+    // Get the coordinates whenever the user drags the marker to a new place
+    function onMove(e) {
+        console.log('Detected Marker Move')
+        console.log(e.target._latlng);
+        console.log(e.target._latlng.lat)
+        console.log(e.target._latlng.lng)
+    }
+
+}
+
+</script> 
+
+</head>
+
+
+
+<h3>Map Test Page</h3>
+<div id="mapid"></div>
+<h3>"Footer"</h3>
