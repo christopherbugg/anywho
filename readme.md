@@ -19,6 +19,11 @@ The implementation of this future-framework is currently at [AnyWho.Club](https:
 
 As we migrate to [GitHub](https://github.com/christopherbugg/anywho), the features and bugs will make their way from the [About](./about.php) page into the Issues tab. 
 
+## Contributions:
+Contributions are welcome! Please open an issue if one isn't already open for whatever you're working on.
+
+**Please Note: Contributions are covered by the License currently in-use.** At the moment (while it is source-available) that isn't great but in the future (when the project is open-sourced) that should be more acceptable. 
+
 ## License: [here](./license.md)
 
 *© 2021 Chris Bugg*
