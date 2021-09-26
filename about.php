@@ -39,41 +39,7 @@ style();
 	<li>Eliminate 3-rd party map lookup, ie: self-host map tiles</li>
 	<li>Allow easily verifying other users during chats</li>
 </ul>
-<h3>Pre-Beta Release Roadmap:</h3>
-<ul>
-	<li>Create and implement password policy</li>
-	<li>Release code on github under full copyright</li>
-	<li>Setup email hosting for abuse, support, etc.</li>
-	<li>Fix chat so enter sends and clear textbox</li>
-	<li>Refactor all queries</li>
-	<li>Refactor all pages, attempt to funcitionalize whenever possible</li>
-	<li>Implement reporting, moderation, and administration in-app</li>
-	<li>Implement self-serve account deletion</li>
-	<li>Implement time-locked fields. IE: Location can only be changed once-per-month</li>
-	<li>Change license to one that models Elastic Search-ish</li>	
-	<li>Fill-out FAQ</li>
-	<li>Javascript check and explanation page</li>
-	<li>robots.txt</li>
-	<li>setup and publish scripts (ansible?) for creating, updating, etc.</li>
-</ul>
-<h3>Pre-1.0 Release Roadmap:</h3>
-<ul>
-	<li>Setup config file for secrets and stuff</li>
-	<li>Perform client-side password hashing prior to sending to server</li>
-	<li>security.txt</li>
-	<li>Add Captcha to Signup</li>
-	<li>Implement versioning and releases</li>
-	<li>Strip exif data from uploaded photos</li>
-	<li>Implement user verification (PGP) for chats in-app</li>
-	<li>Implement BitCoin payments</li>
-	<li>Implement free-trial accounts and paid accounts</li>
-</ul>
-<h3>Pre-2.0 Release Roadmap:</h3>
-<ul>
-	<li>Migrate to Cassandra db for easy real replication</li>
-	<li>Integrate CC Payments</li>
-	<li>Multiple photos per user</li>
-</ul>
+<h3><a href="https://github.com/christopherbugg/anywho/milestones">Roadmap</a></h3>
 <h1>FAQ</h1>
 <ul>
 	<li><bold>Is AnyWho Free?</bold> - For now, yes. In the future we plan on adding a payments feature, and then we plan to offer a Free Trial (so anyone can see if there are enough folks that interest them) and a Paid Subscription to actually fund both maintenance and upkeep of the site and development of the code.</li>
