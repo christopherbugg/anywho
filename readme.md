@@ -17,8 +17,6 @@ This repository aims to develop the code behind AnyWho into it's own open source
 
 The implementation of this future-framework is currently at [AnyWho.Club](https://anywho.club). The site should be usable, though it is not yet stable and the database backing it will be recycled as development progresses. It should be used for **testing only**. 
 
-As we migrate to [GitHub](https://github.com/christopherbugg/anywho), the features and bugs will make their way from the [About](./about.php) page into the Issues tab. 
-
 ## Contributions:
 Contributions are welcome! Please open an issue if one isn't already open for whatever you're working on.
 
