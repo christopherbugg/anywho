@@ -146,10 +146,13 @@ window.onload = async function ()
     	await sleep(100);
     }
 
-    // Send a new message then update the list
-    document.getElementById('sendmessage').onclick = async function sendMessage(){
+	// Send a new message then update the list
+	async function sendMessage(){
 
     	let plaintext = document.getElementById('messagebox').value;
+
+		// Clear the box for the next message
+		document.getElementById('messagebox').value = '';
 
     	// Encrypt the message with both public keys
 	    const encrypted = await openpgp.encrypt({
@@ -211,6 +214,14 @@ window.onload = async function ()
     {
 		return new Promise(resolve => setTimeout(resolve, ms));
 	}
+
+	// Listeners for message sending
+	document.getElementById('sendmessage').onclick = sendMessage;
+	document.getElementById("messagebox").addEventListener("keyup", function(event) {
+		if (event.key === "Enter") {
+			sendMessage();
+		}
+	});
 
     await getMessages();
 	await displayMessages();
