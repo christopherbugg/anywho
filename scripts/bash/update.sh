@@ -6,6 +6,7 @@
 webdir="/var/www/html/"
 
 # Pull a fresh copy from the repo, overwriting all local changes
+git fetch --all
 git reset --hard HEAD
 
 # Copy the files to the web-code dir
