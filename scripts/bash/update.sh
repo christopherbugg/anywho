@@ -7,7 +7,7 @@ webdir="/var/www/html/"
 
 # Pull a fresh copy from the repo, overwriting all local changes
 git fetch --all
-git reset --hard HEAD
+git reset --hard origin/main
 
 # Copy the files to the web-code dir
 /bin/cp --recursive --force ../../src/* $webdir
